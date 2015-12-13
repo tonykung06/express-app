@@ -6,7 +6,7 @@ app.disable('x-powered-by');
 
 var port = 5000;
 
-app.get('/*', function(req, res, next) {
+app.get('/', function(req, res, next) {
 	res.send('nodejs app here...');
 });
 
