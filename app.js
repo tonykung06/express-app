@@ -4,7 +4,7 @@ var app = express();
 
 var port = 5000;
 
-app.get('/express-app/*', function(req, res, next) {
+app.get('/*', function(req, res, next) {
 	res.send('nodejs app here...');
 });
 
