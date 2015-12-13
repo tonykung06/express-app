@@ -1,0 +1,22 @@
+{
+  "name": "express-app",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "tonykung <tonykung06@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/tonykung06/express-app",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "font-awesome": "~4.5.0"
+  }
+}

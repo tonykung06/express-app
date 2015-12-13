@@ -1,1 +1,4 @@
-{ "allow_root": true }
+{
+	"allow_root": true,
+	"directory": "public/lib"
+}
