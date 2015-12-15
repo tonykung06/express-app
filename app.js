@@ -19,7 +19,13 @@ app.set('view engine', 'ejs');
 app.get('/', function(req, res, next) {
     res.render('index', {
     	title: 'hello',
-    	list: ['2', '3']
+    	nav: [{
+    		link: 'books',
+    		text: 'Books'
+    	}, {
+    		link: 'authors',
+    		text: 'Authors'
+	    }]
     });
 });
 
