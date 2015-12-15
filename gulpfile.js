@@ -22,7 +22,18 @@ gulp.task('inject', function() {
     var wiredepOpts = {
         bowerJson: require('./bower.json'),
         directory: './public/lib',
-        ignorePath: '../../public/'
+        ignorePath: '../../public/',
+        jade: {
+          block: /(([ \t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+          detect: {
+            js: /script\(.*src=['"]([^'"]+)/gi,
+            css: /link\(.*href=['"]([^'"]+)/gi
+          },
+          replace: {
+            js: 'script(src=\'{{filePath}}\')',
+            css: 'link(rel=\'stylesheet\', href=\'{{filePath}}\')'
+          }
+        }
     };
     var injectSrc = gulp.src(['./public/css/*.css', './public/js/*.js'], {
         read: false
@@ -33,7 +44,7 @@ gulp.task('inject', function() {
         relative: true
     };
 
-    return gulp.src('src/views/*.html')
+    return gulp.src('src/views/*.*')
         .pipe(wiredep(wiredepOpts))
         .pipe(inject(injectSrc, injectOpts))
         .pipe(gulp.dest('./src/views'));

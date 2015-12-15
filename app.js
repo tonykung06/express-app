@@ -7,10 +7,13 @@ app.disable('x-powered-by');
 var port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
-app.use(express.static('src/views'));
+app.set('views', './src/views');
+app.set('view engine', 'jade');
 
 app.get('/', function(req, res, next) {
-    res.send('Hello World');
+    res.render('index', {
+    	list: ['2', '3']
+    });
 });
 
 app.get('/books', function(req, res, next) {
