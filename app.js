@@ -14,11 +14,11 @@ app.engine('hbs', handlebars({
 	extname: 'hbs'
 }));
 
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res, next) {
-    res.render('index.hbs', {
-    	title: 'hihihi',
+    res.render('index', {
+    	title: 'hello',
     	list: ['2', '3']
     });
 });
