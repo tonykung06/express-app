@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run production",
-    "production": "PORT=5000 nvm install && node app",
+    "production": "PORT=5000 node app",
     "dev": "gulp serve",
     "postinstall": "bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
