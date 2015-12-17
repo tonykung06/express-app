@@ -1,5 +1,25 @@
 var express = require('express');
 var app = express();
+var sql = require('mssql');
+var config = {
+    user: process.env.MSSQLUSER || 'fake-user',
+    password: process.env.MSSQLPWD || 'fake-pwd',
+    server: 'db.tonykung.info',
+    database: 'Books',
+    options: {
+        encrypt: true
+    }
+};
+
+console.dir(config);
+
+sql.connect(config, function(err) {
+    if (err) {
+        console.log('sql server connection error...');
+        console.dir(err);
+    }
+});
+
 var port = process.env.PORT || 5000;
 var nav = [{
 	link: 'books',
@@ -18,9 +38,6 @@ app.engine('hbs', handlebars({
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-// var staticConfig = { redirect: false, fallthrough: false };
-// app.use('/books', express.static('public', staticConfig));
-// app.use('/', express.static('public', staticConfig));
 app.use('/', express.static('public'));
 app.get('/', function(req, res, next) {
     res.render('index', {
@@ -30,8 +47,10 @@ app.get('/', function(req, res, next) {
 });
 app.use('/books', bookRouter);
 
-app.get('/books', function(req, res, next) {
-    res.send('Hello Books');
+app.use(function(err, req, res, next) {
+    console.log('final error handler...');
+    console.error(err);
+    res.sendStatus(500);
 });
 
 app.listen(port, function(err) {
