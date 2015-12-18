@@ -1,37 +1,6 @@
 var express = require('express');
 var sql = require('mssql');
-
-var books = [{
-	title: 'Book 1',
-	genre: 'genre 1',
-	author: 'author 1',
-	read: false
-}, {
-	title: 'Book 2',
-	genre: 'genre 2',
-	author: 'author 2',
-	read: false
-}, {
-	title: 'Book 3',
-	genre: 'genre 3',
-	author: 'author 3',
-	read: false
-}, {
-	title: 'Book 4',
-	genre: 'genre 4',
-	author: 'author 4',
-	read: true
-}, {
-	title: 'Book 5',
-	genre: 'genre 5',
-	author: 'author 5',
-	read: true
-}, {
-	title: 'Book 6',
-	genre: 'genre 6',
-	author: 'author 6',
-	read: false
-}];
+var mongodbClient = require('mongodb').MongoClient;
 
 var getRouter = function(nav) {
 	var bookRouter = express.Router();
@@ -42,17 +11,44 @@ var getRouter = function(nav) {
 
 	bookRouter.route('/').get(function(req, res, next) {
 		var request = new sql.Request();
+		var mongoDbUrl = 'mongodb://localhost:55555/libraryApp';
+		var results = [];
+		var count = 2;
+		var doneFetchAllDataCb = function(data) {
+			--count;
+			results = results.concat(data);
+
+			if (count === 0) {
+				res.render('bookListView', {
+			    	title: 'Books',
+			    	nav: nav,
+				    books: results
+			    });
+			}
+		};
+
+		mongodbClient.connect(mongoDbUrl, function(err, db) {
+			if (err) {
+				return next(err);
+			}
+
+			var bookCollection = db.collection('books');
+
+			bookCollection.find({}).toArray(function(err, results) {
+				if (err) {
+					return next(err);
+				}
+
+				doneFetchAllDataCb(results);
+			});
+		});
 
 		request.query('select * from tony_books', function(err, recordSet) {
 			if (err) {
 				return next(err);
-			} else {
-				res.render('bookListView', {
-			    	title: 'Books',
-			    	nav: nav,
-				    books: recordSet
-			    });
 			}
+
+			doneFetchAllDataCb(recordSet);
 		});
 	});
 
