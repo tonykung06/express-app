@@ -10,6 +10,15 @@ var getRouter = function(nav) {
 		redirect: false
 	}));
 
+	bookRouter.use(function(req, res, next) {
+		if (!req.user) {
+			res.redirect('../');
+			return;
+		}
+
+		next();
+	});
+
 	bookRouter.route('/').get(function(req, res, next) {
 		var request = new sql.Request();
 		var mongoDbUrl = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';

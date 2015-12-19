@@ -13,12 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.14.2",
+    "content-filter": "^1.0.21",
+    "cookie-parser": "^1.4.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
+    "express-session": "^1.12.1",
     "jade": "^1.11.0",
     "mongodb": "^2.0.52",
-    "mssql": "^2.4.0"
+    "mssql": "^2.4.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "bower": "^1.7.1",
