@@ -12,7 +12,7 @@ var getRouter = function(nav) {
 
 	bookRouter.route('/').get(function(req, res, next) {
 		var request = new sql.Request();
-		var mongoDbUrl = 'mongodb://localhost:' + (process.env.MONGODBPORT || 27017) + '/libraryApp';
+		var mongoDbUrl = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
 		var results = [];
 		var count = 2;
 		var doneFetchAllDataCb = function(data) {
@@ -60,7 +60,7 @@ var getRouter = function(nav) {
 	});
 
 	bookRouter.route('/:id').all(function(req, res, next) {
-		var mongoDbUrl = 'mongodb://localhost:' + (process.env.MONGODBPORT || 27017) + '/libraryApp';
+		var mongoDbUrl = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
 		var ps = new sql.PreparedStatement();
 		var doneFetchAllDataCb = function(data) {
 			//used in view rendering

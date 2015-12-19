@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var sql = require('mssql');
 var config = {
-    user: process.env.MSSQLUSER || 'fake-user',
-    password: process.env.MSSQLPWD || 'fake-pwd',
+    user: process.env.EXPRESS_APP_MSSQL_USER || 'fake-user',
+    password: process.env.EXPRESS_APP_MSSQL_PWD || 'fake-pwd',
     server: 'db.tonykung.info',
     database: 'Books',
     options: {
@@ -18,7 +18,7 @@ sql.connect(config, function(err) {
     }
 });
 
-var port = process.env.PORT || 3000;
+var port = process.env.EXPRESS_APP_PORT || 3000;
 var nav = [{
 	link: 'books',
 	text: 'Books'
