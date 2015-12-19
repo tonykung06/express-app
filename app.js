@@ -11,8 +11,6 @@ var config = {
     }
 };
 
-console.dir(config);
-
 sql.connect(config, function(err) {
     if (err) {
         console.log('sql server connection error...');
@@ -29,6 +27,8 @@ var nav = [{
 	text: 'Authors'
 }];
 var bookRouter = require('./src/routes/bookRoutes')(nav);
+var authorRouter = require('./src/routes/authorRoutes')(nav);
+var adminRouter = require('./src/routes/adminRoutes')(nav);
 var handlebars = require('express-handlebars');
 
 app.disable('x-powered-by');
@@ -46,6 +46,8 @@ app.get('/', function(req, res, next) {
     });
 });
 app.use('/books', bookRouter);
+app.use('/authors', authorRouter);
+// app.use('/admin', adminRouter);
 
 app.use(function(err, req, res, next) {
     console.log('final error handler...');
