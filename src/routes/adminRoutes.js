@@ -5,7 +5,7 @@ var getRouter = function(nav) {
 	var adminRouter = express.Router();
 
 	adminRouter.route('/addBooks').get(function(req, res) {
-		var url = 'mongodb://localhost:55555/libraryApp';
+		var url = 'mongodb://localhost:' + (process.env.MONGODBPORT || 27017) + '/libraryApp';
 
 		mongodbClient.connect(url, function(err, db) {
 			var collection = db.collection('books');

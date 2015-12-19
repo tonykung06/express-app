@@ -18,7 +18,7 @@ sql.connect(config, function(err) {
     }
 });
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 3000;
 var nav = [{
 	link: 'books',
 	text: 'Books'
