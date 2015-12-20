@@ -58,6 +58,11 @@ app.use(session({
 require('./src/configs/passport')(app);
 
 app.get('/', function(req, res) {
+    if (req.user) {
+        res.redirect('books');
+        return;
+    }
+
     res.render('index', {
     	title: 'Main',
     	nav: nav

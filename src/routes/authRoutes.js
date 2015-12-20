@@ -46,7 +46,7 @@ var getRouter = function() {
 
 		next();
 	}).get(function(req, res) {
-		res.json(req.user);
+		res.redirect('../books');
 	});
 
 	return authRouter;
