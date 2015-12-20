@@ -3,8 +3,27 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var jscsStylish = require('gulp-jscs-stylish');
 var nodemon = require('gulp-nodemon');
+var fs = require('fs');
 
 var jsFiles = ['*.js', 'src/**/*.js'];
+
+gulp.task('prepareConfigs', function() {
+    var sampleConfigFile = './src/configs/app-sample.js';
+    var configFile = './src/configs/app.js';
+
+    fs.exists(configFile, function (exists) {
+        if (!exists) {
+            // fs.renameSync(sampleConfigFile, configFile);
+            fs.readFile(sampleConfigFile, function (err, data) {
+                if (err) throw err;
+
+                fs.writeFile(configFile, data, function (err) {
+                    if (err) throw err;
+                });
+            });
+        }
+    });
+});
 
 gulp.task('style', function() {
     return gulp.src(jsFiles)
@@ -51,7 +70,7 @@ gulp.task('inject', function() {
 });
 
 //both style and inject will be run async
-gulp.task('serve', ['style', 'inject'], function() {
+gulp.task('serve', ['prepareConfigs', 'style', 'inject'], function() {
     var opts = {
         script: 'app.js',
         delayTime: 1,

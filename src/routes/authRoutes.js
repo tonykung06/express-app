@@ -1,6 +1,7 @@
 var express = require('express');
 var mongodbClient = require('mongodb').MongoClient;
 var passport = require('passport');
+var appConfigs = require('../configs/app');
 
 var getRouter = function() {
 	var authRouter = express.Router();
@@ -12,7 +13,7 @@ var getRouter = function() {
 	});
 	
 	authRouter.route('/signUp').post(function(req, res, next) {
-		var url = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
+		var url = 'mongodb://localhost:' + (appConfigs.MONGODB_PORT) + '/libraryApp';
 
 		mongodbClient.connect(url, function(err, db) {
 			var userCollection = db.collection('users');

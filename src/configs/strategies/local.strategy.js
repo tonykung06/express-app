@@ -1,12 +1,13 @@
 var LocalStrategy = require('passport-local').Strategy;
 var mongodbClient = require('mongodb').MongoClient;
+var appConfigs = require('../app');
 
 module.exports = function(passport) {
 	passport.use(new LocalStrategy({
 		usernameField: 'userName',
 		passwordField: 'password'
 	}, function(userName, password, done) {
-		var url = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
+		var url = 'mongodb://localhost:' + (appConfigs.MONGODB_PORT) + '/libraryApp';
 
 		mongodbClient.connect(url, function(err, db) {
 			var userCollection = db.collection('users');

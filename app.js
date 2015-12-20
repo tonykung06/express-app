@@ -3,12 +3,13 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var filter = require('content-filter');
+var appConfigs = require('./src/configs/app');
 
 var app = express();
 var sql = require('mssql');
 var config = {
-    user: process.env.EXPRESS_APP_MSSQL_USER || 'fake-user',
-    password: process.env.EXPRESS_APP_MSSQL_PWD || 'fake-pwd',
+    user: appConfigs.MSSQL_USER,
+    password: appConfigs.MSSQL_PWD,
     server: 'db.tonykung.info',
     database: 'Books',
     options: {
@@ -23,7 +24,7 @@ sql.connect(config, function(err) {
     }
 });
 
-var port = process.env.EXPRESS_APP_PORT || 3000;
+var port = appConfigs.APP_PORT;
 var nav = [{
 	link: 'books',
 	text: 'Books'
@@ -52,7 +53,7 @@ app.use(filter({
 }));
 app.use(cookieParser());
 app.use(session({
-    secret: process.env.EXPRESS_APP_SESSION_SECRET || 'library'
+    secret: appConfigs.SESSION_SECRET
 }));
 require('./src/configs/passport')(app);
 

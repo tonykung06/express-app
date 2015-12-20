@@ -2,6 +2,7 @@ var express = require('express');
 var sql = require('mssql');
 var mongodbClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
+var appConfigs = require('../configs/app');
 
 var getRouter = function(nav) {
 	var bookRouter = express.Router();
@@ -21,7 +22,7 @@ var getRouter = function(nav) {
 
 	bookRouter.route('/').get(function(req, res, next) {
 		var request = new sql.Request();
-		var mongoDbUrl = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
+		var mongoDbUrl = 'mongodb://localhost:' + (appConfigs.MONGODB_PORT) + '/libraryApp';
 		var results = [];
 		var count = 2;
 		var doneFetchAllDataCb = function(data) {
@@ -69,7 +70,7 @@ var getRouter = function(nav) {
 	});
 
 	bookRouter.route('/:id').all(function(req, res, next) {
-		var mongoDbUrl = 'mongodb://localhost:' + (process.env.EXPRESS_APP_MONGODB_PORT || 27017) + '/libraryApp';
+		var mongoDbUrl = 'mongodb://localhost:' + (appConfigs.MONGODB_PORT) + '/libraryApp';
 		var ps = new sql.PreparedStatement();
 		var doneFetchAllDataCb = function(data) {
 			//used in view rendering
